@@ -69,4 +69,19 @@ class User extends Authenticatable
         return $this->followers()->toggle($user);//适用belongToMany
     }
 
+    public function votes()
+    {
+        return $this->belongsToMany(Answer::class,'votes')->withTimestamps();
+    }
+
+    public function voteFor($answer)
+    {
+        return $this->votes()->toggle($answer);
+    }
+
+    public function hasVoteFor($answer)
+    {
+        return $this->votes()->exists('answer_id',$answer);
+    }
+
 }
