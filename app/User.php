@@ -84,4 +84,9 @@ class User extends Authenticatable
         return $this->votes()->exists('answer_id',$answer);
     }
 
+    public function messages()
+    {
+        return $this->hasMany(Message::class,'to_user_id');
+    }
+
 }
