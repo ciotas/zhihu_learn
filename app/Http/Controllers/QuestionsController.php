@@ -147,4 +147,30 @@ class QuestionsController extends Controller
         abort(403,'Forbidden');
     }
 
+
+    public function follower(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        $followed = $user->followed($request->get('question'));
+        if($followed){
+            return response()->json(['followed'=>true]);
+        }
+        return response()->json(['followed'=>false]);
+    }
+
+    public function follow(Request $request)
+    {
+        $user = Auth::guard('api')->user();
+        $question = $this->questionRepository->byId($request->get('question'));
+        $followed = $user->followThis($question->id);
+        $isfollowed = true;
+        if(count($followed['detached']) > 0){
+            $question->decrement('followers_count');
+            $isfollowed = false;
+        }
+        $question->increment('followers_count');
+
+        return response()->json(['followed'=>$isfollowed]);
+
+    }
 }
