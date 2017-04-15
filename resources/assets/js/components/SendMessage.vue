@@ -1,5 +1,6 @@
 <template>
     <div>
+
         <button
                 class="btn btn-default pull-right"
                 style="margin-top: -36px;"
@@ -35,11 +36,11 @@
 <script>
     export default {
         props:['user'],
-        data() {//必须为一个函数
-           return {
+        data() {
+            return {
                 body:'',
                 status: false
-           }
+            }
         },
         methods:{
             store() {
@@ -51,8 +52,8 @@
                     }, 2000)
                 })
             },
-            showSendMessageForm(){
-                $('#modal-send-message).show();
+            showSendMessageForm() {
+                $('#modal-send-message').modal('show')
             }
         }
     }

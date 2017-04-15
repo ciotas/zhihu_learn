@@ -2,26 +2,26 @@
 
 namespace App\Notifications;
 
-use App\Channels\SendCloudChannel;
-use App\Mailer\UserMailer;
+use App\Message;
 use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Support\Facades\Auth;
 
-class NewUserFollowNotification extends Notification
+class SendPrivateMsgNotification extends Notification
 {
     use Queueable;
 
+    public $message;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Message $message)
     {
-        //
+        $this->message = $message;
     }
 
     /**
@@ -32,7 +32,7 @@ class NewUserFollowNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database',SendCloudChannel::class];
+        return ['database'];
     }
 
 
@@ -40,17 +40,10 @@ class NewUserFollowNotification extends Notification
     {
         return [
 
-            'name' => Auth::guard('api')->user()->name,
+            'name' => $this->message->from_user_id,
+            'dialog'=>$this->message->dialog_id,
         ];
 
-    }
-
-    /**
-     * @param $notifiable
-     * 发送通知邮件
-     */
-    public function toSendCloud($notifiable){
-        (new UserMailer())->followNotifyEmail($notifiable->email);
     }
 
     /**

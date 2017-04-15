@@ -35,6 +35,18 @@ class QuestionRepository
         return Question::create($attributes);
     }
 
+    public function byId($id)
+    {
+        return Question::find($id);
+        
+    }
+
+
+    public function getQuestionCommentsById($id)
+    {
+        $question = Question::with('comments','comments.user')->where('id',$id)->first();
+        return $question->comments;
+    }
     /**
      * @param $topics
      * @return array
@@ -103,14 +115,6 @@ class QuestionRepository
     }
 
 
-    /**
-     * @param $id
-     * @return mixed
-     * 根据id获取一条question
-     */
-    public function byId($id){
-        return Question::find($id);
-    }
 
     public function getQuestionsFeed(){
         return Question::published()->latest('updated_at')->with('user')->get();
