@@ -23,9 +23,10 @@ class MessageController extends Controller
     public function store(Request $request)
     {
         $message = $this->messageRepository->create([
-            'from_user_id' => Auth::guard('api')->user()->id,
+            'from_user_id' => user('api')->id,
             'to_user_id' => $request->get('user'),
-            'body' => $request->get('body')
+            'body' => $request->get('body'),
+            'dialog_id'=>time().Auth::id()
         ]);
         if($message){
             $message->notify(new SendPrivateMsgNotification());//站内信

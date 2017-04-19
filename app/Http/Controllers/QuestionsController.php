@@ -150,8 +150,7 @@ class QuestionsController extends Controller
 
     public function follower(Request $request)
     {
-        $user = Auth::guard('api')->user();
-        $followed = $user->followed($request->get('question'));
+        $followed = user('api')->followed($request->get('question'));
         if($followed){
             return response()->json(['followed'=>true]);
         }
@@ -160,9 +159,8 @@ class QuestionsController extends Controller
 
     public function follow(Request $request)
     {
-        $user = Auth::guard('api')->user();
         $question = $this->questionRepository->byId($request->get('question'));
-        $followed = $user->followThis($question->id);
+        $followed = user('api')->followThis($question->id);
         $isfollowed = true;
         if(count($followed['detached']) > 0){
             $question->decrement('followers_count');

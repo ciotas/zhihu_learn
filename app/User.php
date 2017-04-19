@@ -81,7 +81,7 @@ class User extends Authenticatable
 
     public function hasVoteFor($answer)
     {
-        return $this->votes()->exists('answer_id',$answer);
+        return !!$this->votes()->where('answer_id', $answer)->count();
     }
 
     public function messages()
