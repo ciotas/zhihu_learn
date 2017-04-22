@@ -43,7 +43,7 @@ class InboxRepository
 
     public function create(array $arr)
     {
-        Message::create($arr);
+        return Message::create($arr);
     }
 
 }

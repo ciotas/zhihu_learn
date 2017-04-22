@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Notifications\SendPrivateMsgNotification;
 use App\Repositories\InboxRepository;
 use Illuminate\Http\Request;
 
@@ -37,13 +38,14 @@ class InboxController extends Controller
         $message = $this->inboxRepository->getMessageByDialogId($dialogId);
         $toUserId = $message->from_user_id === user()->id ? $message->to_user_id : $message->from_user_id;
 
-        $arr = [
+        $newMessage = $this->inboxRepository->create([
             'from_user_id' => user()->id,
             'to_user_id' => $toUserId,
             'body' => request('body'),
             'dialog_id' => $dialogId
-        ];
-        $this->inboxRepository->create($arr);
+        ]);
+
+        $newMessage->toUser->notify(new SendPrivateMsgNotification($newMessage));
 
         return back();
     }

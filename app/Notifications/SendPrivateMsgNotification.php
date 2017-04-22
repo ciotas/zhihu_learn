@@ -40,7 +40,7 @@ class SendPrivateMsgNotification extends Notification
     {
         return [
 
-            'name' => $this->message->from_user_id,
+            'name' => $this->message->fromUser->name,
             'dialog'=>$this->message->dialog_id,
         ];
 

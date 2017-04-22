@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+    <example></example>
     @include('flash::message')
     {{--<div class="container">--}}
     {{--@if (session()->has('flash_notification.message'))--}}
@@ -14,13 +15,9 @@
     {{--</div>--}}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <div class="panel panel-default">
-                <div class="panel-heading">控制面板</div>
-
-                <div class="panel-body">
-                    你已经登陆!
-                </div>
-            </div>
+            <passport-clients></passport-clients>
+            <passport-authorized-clients></passport-authorized-clients>
+            <passport-personal-access-tokens></passport-personal-access-tokens>
         </div>
     </div>
 </div>

@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
@@ -32,5 +32,3 @@ Route::middleware('auth:api')->post('/message/store','MessageController@store');
 Route::middleware('auth:api')->get('answer/{id}/comments','CommentsController@answer');
 Route::middleware('auth:api')->get('question/{id}/comments','CommentsController@question');
 Route::middleware('auth:api')->post('comment','CommentsController@store');
-
-
