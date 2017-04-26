@@ -17,7 +17,7 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('api')->get('/topics','TopicsController@index');
+Route::middleware('auth:api')->get('/topics','TopicsController@index');
 Route::middleware('auth:api')->post('/question/follower','QuestionsController@follower');
 Route::middleware('auth:api')->post('/question/follow','QuestionsController@follow');
 

@@ -16917,6 +16917,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
  // es6 shim
 
@@ -16927,7 +16928,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			show: false,
 			params: {
-				token: '123456798',
+				_token: Laravel.csrfToken,
 				name: 'avatar'
 			},
 			headers: {
@@ -16966,6 +16967,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			console.log('-------- upload success --------');
 			console.log(jsonData);
 			console.log('field: ' + field);
+			this.imgDataUrl = jsonData.url;
+			this.toggleShow();
 		},
 
 		/**
@@ -44889,12 +44892,14 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', [_c('my-upload', {
+  return _c('div', {
+    staticClass: "text-center"
+  }, [_c('my-upload', {
     attrs: {
-      "field": "img",
+      "field": "avatar",
       "width": 300,
       "height": 300,
-      "url": "/upload",
+      "url": "/avatar",
       "params": _vm.params,
       "headers": _vm.headers,
       "img-format": "png"
@@ -44914,14 +44919,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('img', {
     attrs: {
       "src": _vm.imgDataUrl,
-      "width": "45"
+      "width": "80"
     }
-  }), _vm._v(" "), _c('a', {
-    staticClass: "btn",
+  }), _vm._v(" "), _c('div', {
+    staticStyle: {
+      "margin-top": "20px"
+    }
+  }, [_c('button', {
+    staticClass: "btn btn-default",
     on: {
       "click": _vm.toggleShow
     }
-  }, [_vm._v("修改头像")])], 1)
+  }, [_vm._v("修改头像")])])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
